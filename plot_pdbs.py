@@ -12,7 +12,7 @@ if len(sys.argv) > 1:
 	os.chdir(sys.argv[1])
 
 trj = mdt.load(glob('*.pdb'))
-ref = mdt.load('/home/willf/analysis/ago2rh1/2rh1_common_residues_crystal_apo.pdb')
+ref = mdt.load('/home/willf/analysis/apo2rh1/2rh1_common_residues_crystal_apo.pdb')
 
 pwd = os.getcwd()
 tit = pwd[pwd.find('data'):pwd.find('/PDB')]
