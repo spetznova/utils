@@ -12,7 +12,8 @@ if len(sys.argv) > 1:
 	os.chdir(sys.argv[1])
 
 trj = mdt.load(glob('*.pdb'))
-ref = mdt.load('/home/willf/analysis/apo2rh1/2rh1_common_residues_crystal_apo.pdb')
+#ref = mdt.load('/home/willf/analysis/apo2rh1/2rh1_common_residues_crystal_apo.pdb')
+ref = mdt.load('/home/willf/analysis/ago2rh1/2rh1_common_residues_crystal.pdb')
 
 pwd = os.getcwd()
 tit = pwd[pwd.find('data'):pwd.find('/PDB')]
@@ -34,14 +35,38 @@ def rmsd(traj, ref, idx):
     traj = traj.superpose(ref,atom_indices=idx)
     return np.sqrt(np.sum(np.square(traj.xyz[:,idx,:] - ref.xyz[:,idx,:]),axis=(1,2))/len(idx))
 
-npxxy_list=[]
-for i in range(251,257):
-    npxxy_list += resid_to_index(i,'CA'),resid_to_index(i,'N'),resid_to_index(i,'C'),resid_to_index(i,'O')
+
+ago = 1
+if pwd.find('ago') < 0:
+    ago = 0
+
+if not ago:
+    print 'APO TYPE DETECTED'
+
+    ref = mdt.load('/home/willf/analysis/apo2rh1/2rh1_common_residues_crystal_apo.pdb')
+
+    npxxy_list=[]
+    for i in range(250,256):
+        npxxy_list += resid_to_index(i,'CA'),resid_to_index(i,'N'),resid_to_index(i,'C'),resid_to_index(i,'O')
+
+    arg_131_ca = resid_to_index(100,'CA')
+    leu_272_ca = resid_to_index(200,'CA')
+
+if ago:
+    print 'AGO TYPE DETECTED'
+
+    ref = mdt.load('/home/willf/analysis/ago2rh1/2rh1_common_residues_crystal.pdb')
+
+    npxxy_list=[]
+    for i in range(251,257):
+        npxxy_list += resid_to_index(i,'CA'),resid_to_index(i,'N'),resid_to_index(i,'C'),resid_to_index(i,'O')
+
+    arg_131_ca = resid_to_index(100,'CA')
+    leu_272_ca = resid_to_index(201,'CA')
+
 
 npxxy_rms = rmsd(trj,ref,npxxy_list)
 
-arg_131_ca = resid_to_index(100,'CA')
-leu_272_ca = resid_to_index(201,'CA')
 r131 = trj.xyz[:,arg_131_ca,:]
 l272 = trj.xyz[:,leu_272_ca,:]
 dis = np.zeros(len(trj))
