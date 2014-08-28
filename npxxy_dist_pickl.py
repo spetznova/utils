@@ -30,7 +30,7 @@ leu_272_ca = resid_to_index(201,'CA')
 
 assignments = mdtraj.io.loadh('/home/willf/analysis/ago2rh1/tica/dist20E/data_s1n5k100_d10_dist20EAssignments.h5')['arr_0']
 
-npxxy_rmsd = -1*np.ones(shape(assignments))/
+npxxy_rmsd = -1*np.ones(shape(assignments))
 dist = -1*np.ones(shape(assignments))
 for n in range(39999):
     file = "/home/willf/Trajectories/trj" + str(n) + ".lh5"
